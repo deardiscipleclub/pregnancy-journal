@@ -439,6 +439,7 @@
       ["Who can see what I write?", "Only you. Your responses and photos are stored privately to your account."],
       ["Can I give it as a gift?", `Yes, what a sweet gift. Email <a href="mailto:${esc(CFG.supportEmail)}">${esc(CFG.supportEmail)}</a> and we'll set it up for the mom you're blessing.`],
       ["Is this medical advice?", "No. The notes about your baby's growth are for devotional encouragement, and every pregnancy is different. Keep following your provider's care."],
+      ["Can I get a refund?", "Because the whole journal opens to you the moment you check out, all sales are final. If anything isn't working the way it should, please email me. I'd love to help you get settled in."],
       ["What if I need help?", `Email <a href="mailto:${esc(CFG.supportEmail)}">${esc(CFG.supportEmail)}</a>. A real person will write back.`],
     ];
 
@@ -503,7 +504,7 @@
             <p class="price">$9.99 <span>one time</span></p>
             <ul>${included.map((i) => `<li>${i}</li>`).join("")}</ul>
             ${buyBtn("Get the journal")}
-            <p class="form-note">Sales tax is added at checkout where it applies. After you pay, you'll come right back here to sign in with the same email.</p>
+            <p class="form-note">Sales tax is added at checkout where it applies. Since you get the whole journal right away, all sales are final. After you pay, you'll come right back here to sign in with the same email.</p>
           </div>
         </section>
 
