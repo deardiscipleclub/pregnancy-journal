@@ -8,7 +8,7 @@ window.GISP_CONFIG = {
   supabaseAnonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl0eG9jdWhxb3hkYXJyYmJ2YmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE3MzgxMzUsImV4cCI6MjEwNzMxNDEzNX0.62piMTTfmr52tt27UDj9906RdMw0HqkGIiuZPfb4Ymk",
 
   // Stripe payment link (or your Squarespace sales page)
-  purchaseUrl: "",
+  purchaseUrl: "https://buy.stripe.com/dRm28rbjA2iX9TQ7RS1Nu02",
 
   supportEmail: "rachel@discipleco.org",
 };
