@@ -403,15 +403,137 @@
     app.innerHTML = `<div class="loading">${esc(msg)}</div>`;
   }
 
+  // Signed-out visitors see the sales page; #/signin shows the sign-in form.
   function viewSignIn(prefillEmail = "") {
+    if (location.hash.startsWith("#/signin")) return viewSignInForm(prefillEmail);
+    return viewSales();
+  }
+
+  function viewSales() {
+    const buy = CFG.purchaseUrl || "#/signin";
+    const buyBtn = (label) => `<a class="btn" href="${esc(buy)}">${label}</a>`;
+    const rhythm = [
+      ["Scripture", "A verse to carry with you through the week."],
+      ["Baby this week", "What God is forming in your womb, a moment to marvel at the Creator, and a Pause + Reflect question."],
+      ["Prayers", "A prayer for your baby and a prayer for you."],
+      ["Momma Reflection", "Gentle questions about how you're doing physically, emotionally, and spiritually."],
+      ["Secret Place Moment", "Listening prayer. Slow down, keep your Bible open, and write what you sense from the Lord."],
+      ["Dear Baby", "A letter to your child, a few more lines each week."],
+      ["Memories + Blessing", "Add this week's photos, then close with a blessing spoken over your baby."],
+    ];
+    const features = [
+      ["Write or speak", "Tired hands? Tap Speak and talk it out. Your words turn into text right on the page."],
+      ["Keep this week's photos", "Your bump, the ultrasound, the nursery, the ordinary moments. Each week has a place for them."],
+      ["Start where you are", "Add your due date and the journal opens to your week. Begin at week 6 or week 30."],
+      ["Private to you", "Your words and photos belong to you. No one else can see them."],
+      ["Saves as you go", "Write a little in the car line and finish after bedtime. Nothing gets lost."],
+      ["A Legacy Book", "Every prayer, letter, and photo gathered into one keepsake to print or save."],
+    ];
+    const included = ["All 35 weeks, from week 6 to week 40", "Welcome and how-to pages for listening prayer",
+      "Baby's Birth pages for your birth story", "Write or speak your responses", "Memory photos every week",
+      "A printable Legacy Book", "Lifetime access, no subscription"];
+    const faq = [
+      ["I'm already past week 6. Can I still start?", "Yes. Begin with the week you're in today. Every earlier week stays open whenever you want to go back."],
+      ["Do I need to download an app?", "No. It works in the web browser on your phone, tablet, or computer."],
+      ["How do I sign in?", "Use the email you paid with. We'll send you a 6-digit code each time, so there's no password to remember."],
+      ["Who can see what I write?", "Only you. Your responses and photos are stored privately to your account."],
+      ["Can I give it as a gift?", `Yes, what a sweet gift. Email <a href="mailto:${esc(CFG.supportEmail)}">${esc(CFG.supportEmail)}</a> and we'll set it up for the mom you're blessing.`],
+      ["Is this medical advice?", "No. The notes about your baby's growth are for devotional encouragement, and every pregnancy is different. Keep following your provider's care."],
+      ["What if I need help?", `Email <a href="mailto:${esc(CFG.supportEmail)}">${esc(CFG.supportEmail)}</a>. A real person will write back.`],
+    ];
+
+    app.innerHTML = `
+      <header class="topbar sales-top">
+        <a class="wordmark" href="#/"><span class="script-soft">Growing in the Secret Place</span></a>
+        <nav class="topnav" aria-label="Main"><a href="#/signin">Sign in</a></nav>
+      </header>
+      <main id="main" class="sales">
+        <section class="sales-hero">
+          <div class="sales-hero-text">
+            <span class="caps muted">Pregnancy prayer + legacy journal</span>
+            <h1>Grow in the secret place <em>while He grows your baby.</em></h1>
+            <p class="lede">A week-by-week online devotional for weeks 6 through 40. Scripture, prayer, and quiet time with Jesus, with space to write or speak what He's saying and to keep each week's photos.</p>
+            <div class="sales-ctas">
+              ${buyBtn("Get the journal · $9.99")}
+              <a class="btn ghost" href="#/signin">Already have it? Sign in</a>
+            </div>
+            <p class="form-note">One-time purchase. Lifetime access. Works on your phone.</p>
+          </div>
+          <div class="sales-cover"><img src="cover.jpg" alt="Growing in the Secret Place, a pregnancy prayer and legacy journal by Rachel Lynn Lawrence" width="640" height="835"></div>
+        </section>
+
+        <section class="sales-band">
+          <p class="sales-quote">“Before I formed you in the womb I knew you.”</p>
+          <p class="caps">Jeremiah 1:5, ESV</p>
+        </section>
+
+        <section class="sales-section">
+          <h2>Every week, the same <em>gentle rhythm</em></h2>
+          <p class="muted center">Each week could be completed in one day, or spread throughout your week. There's no pressure to rush.</p>
+          <ol class="rhythm">
+            ${rhythm.map(([t, d], i) => `<li><span class="num">${i + 1}</span><div><h3>${t}</h3><p>${d}</p></div></li>`).join("")}
+          </ol>
+        </section>
+
+        <section class="sales-section">
+          <h2>Made for <em>full days</em></h2>
+          <div class="feature-grid">
+            ${features.map(([t, d]) => `<div class="feature"><h3>${t}</h3><p>${d}</p></div>`).join("")}
+          </div>
+        </section>
+
+        <section class="sales-section sales-legacy">
+          <div class="legacy">
+            <h3>legacy</h3>
+            <div class="ornament" aria-hidden="true"><svg width="120" height="16" viewBox="0 0 120 16"><path d="M4 8h40M76 8h40" stroke="currentColor" stroke-width="1"/><path d="M60 13c-4.5-3-7-5.4-7-8a3.5 3.5 0 0 1 7-1.4A3.5 3.5 0 0 1 67 5c0 2.6-2.5 5-7 8z" fill="currentColor"/></svg></div>
+            <p class="legacy-quote">One day, perhaps years from now, your son or daughter may hold this journal in their hands and discover that long before they were ever born, they were already being prayed for, blessed, and deeply loved.</p>
+            <p class="signature">Rachel Lynn Lawrence</p>
+          </div>
+        </section>
+
+        <section class="sales-section sales-about">
+          <h2>Hi, I'm <em>Rachel</em>.</h2>
+          <p>I'm the founder of Disciple Co. and Lawrence Ministries. Before full-time ministry I worked as a pediatric ICU nurse, and motherhood has been one of God's greatest classrooms for me. After my first son was born I walked through a very dark postpartum season, and Jesus met me there.</p>
+          <p>I wrote this journal while pregnant with my fifth child, praying over each week as I lived it. Every prayer and every invitation into the Secret Place was lived before it was written. My hope is that it helps you draw close to Jesus while He forms your baby, and leaves a legacy of faith your child can hold one day.</p>
+        </section>
+
+        <section class="sales-section" id="price">
+          <div class="price-card">
+            <span class="caps muted">Growing in the Secret Place</span>
+            <p class="price">$9.99 <span>one time</span></p>
+            <ul>${included.map((i) => `<li>${i}</li>`).join("")}</ul>
+            ${buyBtn("Get the journal")}
+            <p class="form-note">Sales tax is added at checkout where it applies. After you pay, you'll come right back here to sign in with the same email.</p>
+          </div>
+        </section>
+
+        <section class="sales-section">
+          <h2>Questions</h2>
+          <div class="faq">
+            ${faq.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join("")}
+          </div>
+        </section>
+
+        <section class="sales-section center sales-final">
+          <p class="script-soft" style="font-size:3rem;margin:0">Start where you are.</p>
+          <p class="muted">You're doing great, momma. Keep going.</p>
+          <div class="sales-ctas" style="justify-content:center">${buyBtn("Get the journal · $9.99")}</div>
+        </section>
+      </main>
+      ${footer()}`;
+    window.scrollTo({ top: 0 });
+  }
+
+  function viewSignInForm(prefillEmail = "") {
     let email = prefillEmail;
-    const purchase = CFG.purchaseUrl ? `<p class="form-note">Don't have the journal yet? <a href="${esc(CFG.purchaseUrl)}">Get Growing in the Secret Place</a>.</p>` : "";
+    const purchase = CFG.purchaseUrl ? `<p class="form-note">Don't have the journal yet? <a href="#/">See what's inside</a> or <a href="${esc(CFG.purchaseUrl)}">get it for $9.99</a>.</p>` : "";
     app.innerHTML = `
       <div class="signin">
         <div class="signin-cover" role="img" aria-label="Growing in the Secret Place, a pregnancy prayer and legacy journal by Rachel Lynn Lawrence"></div>
         <main class="signin-panel" id="main">
           <span class="caps muted">Pregnancy prayer + legacy journal</span>
           <h1>Welcome, <em>momma</em>.<br>Let's meet with Jesus.</h1>
+          <p class="form-note">Just bought the journal? Thank you! Sign in with the email you used at checkout.</p>
           <form id="email-form" novalidate>
             <div class="field">
               <label for="email">Email you used at checkout</label>
