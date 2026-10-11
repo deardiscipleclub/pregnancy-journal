@@ -381,3 +381,9 @@ main { display: block; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* Dark mode: keep main buttons light so they stand out */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .btn:not(.ghost) { background: var(--ink); color: var(--page); border-color: var(--ink); }
+}
+:root[data-theme="dark"] .btn:not(.ghost) { background: var(--ink); color: var(--page); border-color: var(--ink); }
